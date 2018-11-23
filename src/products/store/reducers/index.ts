@@ -4,8 +4,6 @@ import {
   createFeatureSelector,
   createSelector
 } from "@ngrx/store";
-import { getPizzas } from "./pizzas.reducers";
-
 export interface ProductsState {
   pizzas: fromPizza.PizzaState;
 }
@@ -23,9 +21,15 @@ export const getPizzaState = createSelector(
   (state: ProductsState) => state.pizzas
 );
 
-export const getAllPizzas = createSelector(
+export const getPizzasEntities = createSelector(
   getPizzaState,
-  fromPizza.getPizzas
+  fromPizza.getPizzasEntites
+);
+export const getAllPizzas = createSelector(
+  getPizzasEntities,
+  entities => {
+    return Object.keys(entities).map(id => entities[+id]);
+  }
 );
 export const getPizzasLoading = createSelector(
   getPizzaState,
